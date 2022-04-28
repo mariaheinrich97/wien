@@ -40,7 +40,7 @@ let sightLayer = L.featureGroup();
 
 layerControl.addOverlay(sightLayer, "Sehenswürdigkeiten");
 
-let mrk = L.marker([stephansdom.lat, stephansdom.lng].addTo(sightLayer));
+let mrk = L.marker([stephansdom.lat, stephansdom.lng]).addTo(sightLayer);
 
 sightLayer.addTo(map);
 
@@ -52,3 +52,7 @@ L.control.scale({
 // z. B. für Smartphones gut
 L.control.fullscreen().addTo(map);
 // map.addControl(L.control.fullscreen());
+
+let miniMap = new L.Control.MiniMap(
+    L.tileLayer.provider("BasemapAT"),
+).addTo(map);
