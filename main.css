@@ -37,9 +37,10 @@ article {
 
 article #map {
     width: 100%;
-    height: 85vh; 
+    height: 85vh;
     border: 1px solid gray;
 }
+
 /* 85vh = 85 % der Seite (oben seitengröße auch defineirt) - Stellt sicher, dass die gesamte Seite inclusive Header & Footer gesehen wird*/
 
 footer {
