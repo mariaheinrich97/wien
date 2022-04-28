@@ -49,5 +49,6 @@ L.control.scale({
     imperial: false,
 }).addTo(map);
 
+// z. B. für Smartphones gut
 L.control.fullscreen().addTo(map);
 // map.addControl(L.control.fullscreen());
