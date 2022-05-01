@@ -19,6 +19,7 @@ let map = L.map("map", {
         startLayer
     ]
 })
+//Layer einbinden
 
 let layerControl = L.control.layers({
     "BasemapAT Grau": startLayer,
