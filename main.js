@@ -160,3 +160,19 @@ async function loadZones(url) { //anders
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
 loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");
+
+//Hotels und Unterkünfte Vieanna Sightseeing
+async function loadHotels(url) { //anders
+    let response = await fetch(url);
+    let geojson = await response.json();
+    //console.log(geojson); //nur ums in der Console zu sehen
+
+    //Ein- und Ausschalten mit Haken
+    let overlay = L.featureGroup();
+    layerControl.addOverlay(overlay, "Hotels & Unterkünfte Vienna"); //ANDERS
+    overlay.addTo(map);
+
+    L.geoJSON(geojson).addTo(overlay);
+    //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
+}
+loadHotels("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:UNTERKUNFTOGD&srsName=EPSG:4326&outputFormat=json");
