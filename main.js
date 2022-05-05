@@ -96,7 +96,7 @@ async function loadSites(url) {
 loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json");
 
 
-/* 
+/* ERLÄUTERUNG Sehenswürdigekeiten
 async: wartet, bis vorgang abgeschlossen, bevor der nächste ausgeführt wird
 
 Daten abholen / aufrufen
@@ -107,3 +107,4 @@ loadSites definiert die VAriabel und ruft die URL mit der Tabelle Sehenswürdigk
 
     L.geoJSON(geojson).addTo(map); - fügt 63 Marker in die KArte ein (sichtbarmachen)
 */
+
