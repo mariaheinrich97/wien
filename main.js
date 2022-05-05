@@ -93,8 +93,8 @@ async function loadSites(url, layername) {
 
 L.geoJSON(geojson, {
     pointToLayer: function (geoJsonPoint, latlng) {
-        L.marker(latlng).addTo(map);
-       //console.log(geoJsonPoint.properties.NAME);
+        //L.marker(latlng).addTo(map);
+        //console.log(geoJsonPoint.properties.NAME);
         let popup = `
         <img src="${geoJsonPoint.properties.THUMBNAIL}" alt=""><br>
         <strong>${geoJsonPoint.properties.NAME}</strong>
