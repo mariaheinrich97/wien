@@ -139,10 +139,27 @@ async function loadStops(url) {
     layerControl.addOverlay(overlay, "Haltestellen Vienna Sightseeing");
     overlay.addTo(map);
 
-    L.geoJSON(geojson).addTo(overlay);
+    L.geoJSON(geojson, {
+        pointToLayer: function (geoJsonPoint, latlng) {
+            //Wichtig um Attribute des Popups aufzurufen:
+            //console.log(geoJsonPoint.properties); 
+            let popup = ` 
+                    <strong>${geoJsonPoint.properties.LINE_NAME}</strong><br>
+                    Station ${geoJsonPoint.properties.STAT_NAME}
+        `;
+            //Attribute im popup unterschiedlich
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: "icons/bus.png",
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37]
+                })
+            }).bindPopup(popup);
+        }
+    }).addTo(overlay);
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
-//loadStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json");
+loadStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json");
 
 
 //Load... ändern
