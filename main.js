@@ -91,7 +91,25 @@ async function loadSites(url, layername) {
     layerControl.addOverlay(overlay, layername);
     overlay.addTo(map);
 
-    L.geoJSON(geojson).addTo(overlay);
+// geht noch nicht!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+L.geoJSON(geojson, {
+    pointToLayer: function (geoJsonPoint, latlng) {
+        L.marker(latlng).addTo(map);
+       //console.log(geoJsonPoint.properties.NAME);
+        let popup = `
+        <img src="${geoJsonPoint.properties.THUMBNAIL}" alt=""><br>
+        <strong>${geoJsonPoint.properties.NAME}</strong>
+        <hr>
+        Adresse: ${geoJsonPoint.properties.ADRESSE}<br>
+        <a href="${geoJsonPoint.properties.WEITERE_INF}">Weblink</a>
+        `;
+        return L.marker(latlng, {
+            icon: L.icon({
+                iconUrl: "icons/photo.png"
+            })
+        }).bindPopup(popup);
+    }
+}).addTo(overlay);
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
 loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json", "Sehenswürdigkeiten");
@@ -110,20 +128,20 @@ loadSites definiert die VAriabel und ruft die URL mit der Tabelle Sehenswürdigk
 */
 
 //Haltestellen Vieanna Sightseeing
-async function loadStops(url, layername) {
+async function loadStops(url) {
     let response = await fetch(url);
     let geojson = await response.json();
     //console.log(geojson); //nur ums in der Console zu sehen
 
     //Ein- und Ausschalten mit Haken
     let overlay = L.featureGroup();
-    layerControl.addOverlay(overlay, layername);
+    layerControl.addOverlay(overlay, "Haltestellen Vienna Sightseeing");
     overlay.addTo(map);
 
     L.geoJSON(geojson).addTo(overlay);
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
-loadStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json", "Haltestellen Vienna Sightseeing");
+//loadStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json");
 
 
 //Load... ändern
