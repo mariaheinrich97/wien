@@ -150,7 +150,7 @@ async function loadStops(url) {
             //Attribute im popup unterschiedlich
             return L.marker(latlng, {
                 icon: L.icon({
-                    iconUrl: "icons/bus.png",
+                    iconUrl: `icons/bus_${geoJsonPoint.properties.LINE_ID}.png`,
                     iconAnchor: [16, 37],
                     popupAnchor: [0, -37]
                 })
@@ -160,6 +160,7 @@ async function loadStops(url) {
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
 loadStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json");
+//clrs.cc - Farben für Stationen
 
 
 //Load... ändern
