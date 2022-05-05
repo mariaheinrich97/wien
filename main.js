@@ -81,7 +81,8 @@ let ergebnis = ... ausführen der funkiton
 async function loadSites(url) {
     let response = await fetch(url);
     let geojson = await response.json();
-    console.log(geojson);
+    console.log(geojson); //nur ums in der Console zu sehen
+    L.geoJSON(geojson).addTo(map);
 }
 loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json");
 
@@ -89,9 +90,11 @@ loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&vers
 /* 
 async: wartet, bis vorgang abgeschlossen, bevor der nächste ausgeführt wird
 
-Daten abholen
+Daten abholen / aufrufen
 await fetch(url) - warten bis url aufgerufen wrude und spechern
 await response.json (); warten, bis alle Daten aufgerufen wurden
 
 loadSites definiert die VAriabel und ruft die URL mit der Tabelle Sehenswürdigkeiten online auf
+
+    L.geoJSON(geojson).addTo(map); - fügt 63 Marker in die KArte ein (sichtbarmachen)
 */
