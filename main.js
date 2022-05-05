@@ -78,6 +78,8 @@ return gibt wert zurück
 let ergebnis = ... ausführen der funkiton
 */
 
+
+// Sehenswürdigekiten
 async function loadSites(url) {
     let response = await fetch(url);
     let geojson = await response.json();
