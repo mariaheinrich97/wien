@@ -61,6 +61,37 @@ let miniMap = new L.Control.MiniMap(
     }
 ).addTo(map);
 
-// Karten
-// Scale
-// MiniMap
+
+/*
+function addiere(zahl1, zahl2) {
+    let summe = zahl1 + zahl2;
+    return summe; // ohne return, würde nichts zurückgegeben werden
+}
+let ergebnis = addiere(2,2); //Funktion wird aufgerufen
+console.log(ergebnis);
+
+ERKLÄRUNG Defnineiren der Fukiton
+funktion sagt, dass funkiton erstellt wird
+addiere() = Name & Variablen
+ausdruck in {} - was soll geschehen?
+return gibt wert zurück
+let ergebnis = ... ausführen der funkiton
+*/
+
+async function loadSites(url) {
+    let response = await fetch(url);
+    let geojson = await response.json();
+    console.log(geojson);
+}
+loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json");
+
+
+/* 
+async: wartet, bis vorgang abgeschlossen, bevor der nächste ausgeführt wird
+
+Daten abholen
+await fetch(url) - warten bis url aufgerufen wrude und spechern
+await response.json (); warten, bis alle Daten aufgerufen wurden
+
+loadSites definiert die VAriabel und ruft die URL mit der Tabelle Sehenswürdigkeiten online auf
+*/
