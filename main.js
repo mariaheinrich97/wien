@@ -1,4 +1,5 @@
 /* OGD Wien Beispiel */
+// Zeilenumbruch: Option + Z
 
 
 let stephansdom = {
@@ -124,6 +125,12 @@ async function loadStops(url, layername) {
 }
 loadStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json", "Haltestellen Vienna Sightseeing");
 
+
+//Load... ändern
+//URL ändern
+//falls loadLines(url) - dann immer das ändern, da die letze Variale verwendet wird, ansonsten layername als extra variable definieren (dann nach URL aufrufen auch Variable einen Namen vergeben)
+//andere Möglichkeit: keinen layernamen als variable, sondern Funktionsname loadPoly geändert
+
 //Liniennetz Vieanna Sightseeing
 async function loadLines(url) {
     let response = await fetch(url);
@@ -138,13 +145,9 @@ async function loadLines(url) {
     L.geoJSON(geojson).addTo(overlay);
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
-loadLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json");
+//loadLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json");
 
-//LoadLines ändern
-//URL ändern
-//falls loadLines(url) - dann immer das ändern, da die letze Variale verwendet wird, ansonsten layername als extra variable definieren (dann nach URL aufrufen auch Variable einen Namen vergeben)
 
-//andere Möglichkeit: keinen layernamen als variable, sondern Funktionsname loadPoly geändert
 //Fußgängerzonen Vieanna Sightseeing
 async function loadZones(url) { //anders
     let response = await fetch(url);
@@ -159,7 +162,7 @@ async function loadZones(url) { //anders
     L.geoJSON(geojson).addTo(overlay);
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
-loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");
+//loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");
 
 //Hotels und Unterkünfte Vieanna Sightseeing
 async function loadHotels(url) { //anders
@@ -175,4 +178,4 @@ async function loadHotels(url) { //anders
     L.geoJSON(geojson).addTo(overlay);
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
-loadHotels("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:UNTERKUNFTOGD&srsName=EPSG:4326&outputFormat=json");
+//loadHotels("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:UNTERKUNFTOGD&srsName=EPSG:4326&outputFormat=json");
