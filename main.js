@@ -122,5 +122,21 @@ async function loadSites(url, layername) {
     L.geoJSON(geojson).addTo(overlay);
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
-loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json", "Haltestellen");
+loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json", "Haltestellen Vienna Sightseeing");
+
+//Liniennetz Vieanna Sightseeing
+async function loadSites(url, layername) {
+    let response = await fetch(url);
+    let geojson = await response.json();
+    //console.log(geojson); //nur ums in der Console zu sehen
+
+    //Ein- und Ausschalten mit Haken
+    let overlay = L.featureGroup();
+    layerControl.addOverlay(overlay, layername);
+    overlay.addTo(map);
+
+    L.geoJSON(geojson).addTo(overlay);
+    //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
+}
+loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json", "Liniennetz Vienna Sightseeing");
 
