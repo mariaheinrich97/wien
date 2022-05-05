@@ -109,7 +109,7 @@ loadSites definiert die VAriabel und ruft die URL mit der Tabelle Sehenswürdigk
 */
 
 //Haltestellen Vieanna Sightseeing
-async function loadSites(url, layername) {
+async function loadStops(url, layername) {
     let response = await fetch(url);
     let geojson = await response.json();
     //console.log(geojson); //nur ums in der Console zu sehen
@@ -122,21 +122,41 @@ async function loadSites(url, layername) {
     L.geoJSON(geojson).addTo(overlay);
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
-loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json", "Haltestellen Vienna Sightseeing");
+loadStops("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json", "Haltestellen Vienna Sightseeing");
 
 //Liniennetz Vieanna Sightseeing
-async function loadSites(url, layername) {
+async function loadLines(url) {
     let response = await fetch(url);
     let geojson = await response.json();
     //console.log(geojson); //nur ums in der Console zu sehen
 
     //Ein- und Ausschalten mit Haken
     let overlay = L.featureGroup();
-    layerControl.addOverlay(overlay, layername);
+    layerControl.addOverlay(overlay, "Liniennetz Vienna Sightseeing"); //
     overlay.addTo(map);
 
     L.geoJSON(geojson).addTo(overlay);
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
-loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json", "Liniennetz Vienna Sightseeing");
+loadLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json");
 
+//LoadLines ändern
+//URL ändern
+//falls loadLines(url) - dann immer das ändern, da die letze Variale verwendet wird, ansonsten layername als extra variable definieren (dann nach URL aufrufen auch Variable einen Namen vergeben)
+
+//andere Möglichkeit: keinen layernamen als variable, sondern Funktionsname loadPoly geändert
+//Fußgängerzonen Vieanna Sightseeing
+async function loadZones(url) { //anders
+    let response = await fetch(url);
+    let geojson = await response.json();
+    //console.log(geojson); //nur ums in der Console zu sehen
+
+    //Ein- und Ausschalten mit Haken
+    let overlay = L.featureGroup();
+    layerControl.addOverlay(overlay, "Fußgängerzonen Vienna"); //ANDERS
+    overlay.addTo(map);
+
+    L.geoJSON(geojson).addTo(overlay);
+    //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
+}
+loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");
