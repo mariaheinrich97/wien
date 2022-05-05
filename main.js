@@ -81,8 +81,15 @@ let ergebnis = ... ausführen der funkiton
 async function loadSites(url) {
     let response = await fetch(url);
     let geojson = await response.json();
-    console.log(geojson); //nur ums in der Console zu sehen
-    L.geoJSON(geojson).addTo(map);
+    //console.log(geojson); //nur ums in der Console zu sehen
+
+    //Ein- und Ausschalten mit Haken
+    let overlay = L.featureGroup();
+    layerControl.addOverlay(overlay, "Sehenswürdigkeiten");
+    overlay.addTo(map);
+
+    L.geoJSON(geojson).addTo(overlay);
+    //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
 loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json");
 
