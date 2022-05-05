@@ -80,20 +80,20 @@ let ergebnis = ... ausführen der funkiton
 
 
 // Sehenswürdigekiten
-async function loadSites(url) {
+async function loadSites(url, layername) {
     let response = await fetch(url);
     let geojson = await response.json();
     //console.log(geojson); //nur ums in der Console zu sehen
 
     //Ein- und Ausschalten mit Haken
     let overlay = L.featureGroup();
-    layerControl.addOverlay(overlay, "Sehenswürdigkeiten");
+    layerControl.addOverlay(overlay, layername);
     overlay.addTo(map);
 
     L.geoJSON(geojson).addTo(overlay);
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
-loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json");
+loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json", "Sehenswürdigkeiten");
 
 
 /* ERLÄUTERUNG Sehenswürdigekeiten
@@ -107,4 +107,20 @@ loadSites definiert die VAriabel und ruft die URL mit der Tabelle Sehenswürdigk
 
     L.geoJSON(geojson).addTo(map); - fügt 63 Marker in die KArte ein (sichtbarmachen)
 */
+
+//Haltestellen Vieanna Sightseeing
+async function loadSites(url, layername) {
+    let response = await fetch(url);
+    let geojson = await response.json();
+    //console.log(geojson); //nur ums in der Console zu sehen
+
+    //Ein- und Ausschalten mit Haken
+    let overlay = L.featureGroup();
+    layerControl.addOverlay(overlay, layername);
+    overlay.addTo(map);
+
+    L.geoJSON(geojson).addTo(overlay);
+    //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
+}
+loadSites("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKHTSVSLOGD&srsName=EPSG:4326&outputFormat=json", "Haltestellen");
 
