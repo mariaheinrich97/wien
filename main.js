@@ -182,7 +182,7 @@ async function loadLines(url) {
     L.geoJSON(geojson).addTo(overlay);
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
-//loadLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json");
+loadLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:TOURISTIKLINIEVSLOGD&srsName=EPSG:4326&outputFormat=json");
 
 
 //Fußgängerzonen Vieanna Sightseeing
@@ -212,7 +212,69 @@ async function loadHotels(url) { //anders
     layerControl.addOverlay(overlay, "Hotels & Unterkünfte Vienna"); //ANDERS
     overlay.addTo(map);
 
-    L.geoJSON(geojson).addTo(overlay);
+    L.geoJSON(geojson, {
+        pointToLayer: function (geoJsonPoint, latlng) {
+            //L.marker(latlng).addTo(map);
+            //console.log(geoJsonPoint.properties);
+            if (geoJsonPoint.properties.BETRIEBSART_TXT == "Hotel") {
+                let iconStay = "icons/hotel_0star.png"
+            } else if (geoJsonPoint.properties.BETRIEBSART_TXT == "Pension") {
+                let iconStay = "lodging_0star.png"
+            } else {
+                let iconStay = "lodging_apartment-2"
+            }
+
+            let popup = `
+        <strong>
+        Name: ${geoJsonPoint.properties.BETRIEB}<br>
+        Betriebsart: ${geoJsonPoint.properties.BETRIEBSART_TXT}<br>
+        Kategorie: ${geoJsonPoint.properties.KATEGORIE_TXT}<br>
+        </strong>
+        <hr>
+        Adresse: ${geoJsonPoint.properties.ADRESSE}<br>
+        Bezirk: ${geoJsonPoint.properties.BEZIRK}<br>
+        Telefonnummer: ${geoJsonPoint.properties.KONTAKT_TEL}<br>
+        <a href = mailto:${geoJsonPoint.properties.KONTAKT_EMAIL}>E-Mail</a><br>
+        <a href="${geoJsonPoint.properties.WEBLINK1}">Weblink</a>
+        `;
+
+            if (geoJsonPoint.properties.BETRIEBSART_TXT == "Hotel") {
+                //let iconStay = "icons/hotel_0star.png"
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "icons/hotel_0star.png",
+                        iconAnchor: [16, 37],
+                        popupAnchor: [0, -37]
+                    })
+                }).bindPopup(popup);
+            } else if (geoJsonPoint.properties.BETRIEBSART_TXT == "Pension") {
+               return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "icons/lodging_0star.png",
+                        iconAnchor: [16, 37],
+                        popupAnchor: [0, -37]
+                    })
+                }).bindPopup(popup);
+            } else {
+                return L.marker(latlng, {
+                    icon: L.icon({
+                        iconUrl: "icons/apartment-2.png",
+                        iconAnchor: [16, 37],
+                        popupAnchor: [0, -37]
+                    })
+                }).bindPopup(popup);
+            }
+            /*
+            return L.marker(latlng, {
+                icon: L.icon({
+                    iconUrl: iconStay,
+                    iconAnchor: [16, 37],
+                    popupAnchor: [0, -37]
+                })
+            }).bindPopup(popup);
+            */
+        }
+    }).addTo(overlay);
     //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
 }
-//loadHotels("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:UNTERKUNFTOGD&srsName=EPSG:4326&outputFormat=json");
+loadHotels("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:UNTERKUNFTOGD&srsName=EPSG:4326&outputFormat=json");
