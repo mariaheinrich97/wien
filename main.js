@@ -80,7 +80,7 @@ let ergebnis = ... ausführen der funkiton
 */
 
 
-// Sehenswürdigekiten
+// Sehenswürdigekeiten
 async function loadSites(url, layername) {
     let response = await fetch(url);
     let geojson = await response.json();
@@ -264,7 +264,15 @@ async function loadHotels(url) { //anders
     L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
             //L.marker(latlng).addTo(map);
-            //console.log(geoJsonPoint.properties);
+           
+            // # sucht id
+            // . sucht nach Klasse
+            let searchList= document.querySelector("#searchList");
+            console.log(searchList)
+            searchList.innerHTML += `<option value="${geoJsonPoint.properties.BETRIEB}"></option>`;
+            //console.log(document.querySelector("#searchList").innerHTML)
+            //console.log(`option value="${geoJsonPoint.properties.BETRIEB}"></option>`);
+
             if (geoJsonPoint.properties.BETRIEBSART_TXT == "Hotel") {
                 let iconStay = "icons/hotel_0star.png"
             } else if (geoJsonPoint.properties.BETRIEBSART_TXT == "Pension") {
