@@ -252,7 +252,14 @@ loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&vers
 async function loadHotels(url) { //anders
     let response = await fetch(url);
     let geojson = await response.json();
-    //console.log(geojson); //nur ums in der Console zu sehen
+    //console.log(geojson.features); //nur ums in der Console zu sehen
+
+    // Hotels nach Name sortieren
+    geojson.features.sort(function(a, b) {
+        return a.properties.BETRIEB.toLowerCase() > b.properties.BETRIEB.toLowerCase()
+    })
+    // geht nicht in Chrome, nur in Safari/Firefox
+    //console.log(searchList)
 
     //Ein- und Ausschalten mit Haken
     let overlay = L.markerClusterGroup({
@@ -325,7 +332,7 @@ async function loadHotels(url) { //anders
     }).addTo(overlay);
 
     // Anzeigen des gesuchten Hotels und der Inhalte
-    
+
     let form = document.querySelector("#searchForm");
     form.suchen.onclick = function () {
         //console.log(form.hotel.value);
