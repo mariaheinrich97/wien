@@ -255,7 +255,9 @@ async function loadHotels(url) { //anders
     //console.log(geojson); //nur ums in der Console zu sehen
 
     //Ein- und Ausschalten mit Haken
-    let overlay = L.markerClusterGroup();
+    let overlay = L.markerClusterGroup({
+        disableClusteringAtZoom: 17   
+    });
     layerControl.addOverlay(overlay, "Hotels & Unterkünfte Vienna"); //ANDERS
     overlay.addTo(map);
 
