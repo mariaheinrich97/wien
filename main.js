@@ -217,34 +217,34 @@ loadLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&vers
 
 //Fußgängerzonen Vieanna Sightseeing
 async function loadZones(url) { //anders
-let response = await fetch(url);
-let geojson = await response.json();
-//console.log(geojson); //nur ums in der Console zu sehen
+    let response = await fetch(url);
+    let geojson = await response.json();
+    //console.log(geojson); //nur ums in der Console zu sehen
 
-//Ein- und Ausschalten mit Haken
-let overlay = L.featureGroup();
-layerControl.addOverlay(overlay, "Fußgängerzonen Vienna"); //ANDERS
-overlay.addTo(map);
+    //Ein- und Ausschalten mit Haken
+    let overlay = L.featureGroup();
+    layerControl.addOverlay(overlay, "Fußgängerzonen Vienna"); //ANDERS
+    overlay.addTo(map);
 
-L.geoJSON(geojson, {
-    style: function (feature) {
-        return {
-            color: "#F012BE",
-            weight: 1,
-            opacity: 0.2,
-            //fillColor: "#F012BE",
-            fillOpacity: 0.2,
+    L.geoJSON(geojson, {
+        style: function (feature) {
+            return {
+                color: "#F012BE",
+                weight: 1,
+                opacity: 0.2,
+                //fillColor: "#F012BE",
+                fillOpacity: 0.2,
+            }
         }
-    }
 
-}).bindPopup(function (layer) {
-    return `
+    }).bindPopup(function (layer) {
+        return `
         <h4>Fußgängerzone ${layer.feature.properties.ADRESSE}</h4>
         <p>Zeitraum: ${layer.feature.properties.ZEITRAUM || ""}</p>
         <p>${layer.feature.properties.AUSN_TEXT || ""}</p>
         `;
         // || sonst nichts reinschreiben - da sonst das Feld gezeigt wri und nicht schön aussieht
-}).addTo(overlay);
+    }).addTo(overlay);
 }
 loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");
 
@@ -256,7 +256,7 @@ async function loadHotels(url) { //anders
 
     //Ein- und Ausschalten mit Haken
     let overlay = L.markerClusterGroup({
-        disableClusteringAtZoom: 17   
+        disableClusteringAtZoom: 17
     });
     layerControl.addOverlay(overlay, "Hotels & Unterkünfte Vienna"); //ANDERS
     overlay.addTo(map);
@@ -264,10 +264,10 @@ async function loadHotels(url) { //anders
     let hotelsLayer = L.geoJSON(geojson, {
         pointToLayer: function (geoJsonPoint, latlng) {
             //L.marker(latlng).addTo(map);
-           
+
             // # sucht id
             // . sucht nach Klasse
-            let searchList= document.querySelector("#searchList");
+            let searchList = document.querySelector("#searchList");
             //console.log(searchList)
             searchList.innerHTML += `<option value="${geoJsonPoint.properties.BETRIEB}"></option>`;
             //console.log(document.querySelector("#searchList").innerHTML)
@@ -325,14 +325,23 @@ async function loadHotels(url) { //anders
     }).addTo(overlay);
 
     // Anzeigen des gesuchten Hotels und der Inhalte
+    
     let form = document.querySelector("#searchForm");
-    form.suchen.onclick = function() {
-        console.log(form.hotel.value);
-        hotelsLayer.eachLayer(function(marker) {
-            console.log(marker);
-            console.log(marker.getLatLng())
-            console.log(marker.getPopup())
-            console.log(marker.feature.properties.BETRIEB)
+    form.suchen.onclick = function () {
+        //console.log(form.hotel.value);
+        hotelsLayer.eachLayer(function (marker) {
+            //console.log(marker);
+            //console.log(marker.getLatLng())
+            //console.log(marker.getPopup())
+            //console.log(marker.feature.properties.BETRIEB)
+
+            if (form.hotel.value == marker.feature.properties.BETRIEB) {
+                //console.log(marker.getLatLng())
+                //console.log(marker.getPopup())
+                //console.log(marker.feature.properties.BETRIEB)
+                map.setView(marker.getLatLng(), 17) // Karte zoomen: Koordinaten abrufen und 17 als Zoom wählen
+                marker.openPopup()
+            }
         })
     }
 }
