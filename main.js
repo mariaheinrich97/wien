@@ -226,7 +226,18 @@ let overlay = L.featureGroup();
 layerControl.addOverlay(overlay, "Fußgängerzonen Vienna"); //ANDERS
 overlay.addTo(map);
 
-L.geoJSON(geojson).bindPopup(function (layer) {
+L.geoJSON(geojson, {
+    style: function (feature) {
+        return {
+            color: "#F012BE",
+            weight: 1,
+            opacity: 0.2,
+            //fillColor: "#F012BE",
+            fillOpacity: 0.2,
+        }
+    }
+
+}).bindPopup(function (layer) {
     return `
         <h4>Fußgängerzone ${layer.feature.properties.ADRESSE}</h4>
         <p>Zeitraum: ${layer.feature.properties.ZEITRAUM || ""}</p>
