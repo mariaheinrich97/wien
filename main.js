@@ -182,7 +182,7 @@ async function loadLines(url) {
 
     L.geoJSON(geojson, {
         style: function (feature) {
-            console.log(feature);
+            //console.log(feature);
 
             let colors = {
                 "Red Line": "#FF4136",
@@ -194,7 +194,9 @@ async function loadLines(url) {
             }
 
             return {
-                color: `${colors[feature.properties.LINE_NAME]}`
+                color: `${colors[feature.properties.LINE_NAME]}`,
+                weight: 5,
+                //dashArray: [10, 6],
             }
         }
     }).bindPopup(function (layer) {
