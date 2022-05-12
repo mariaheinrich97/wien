@@ -217,17 +217,23 @@ loadLines("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&vers
 
 //Fußgängerzonen Vieanna Sightseeing
 async function loadZones(url) { //anders
-    let response = await fetch(url);
-    let geojson = await response.json();
-    //console.log(geojson); //nur ums in der Console zu sehen
+let response = await fetch(url);
+let geojson = await response.json();
+//console.log(geojson); //nur ums in der Console zu sehen
 
-    //Ein- und Ausschalten mit Haken
-    let overlay = L.featureGroup();
-    layerControl.addOverlay(overlay, "Fußgängerzonen Vienna"); //ANDERS
-    overlay.addTo(map);
+//Ein- und Ausschalten mit Haken
+let overlay = L.featureGroup();
+layerControl.addOverlay(overlay, "Fußgängerzonen Vienna"); //ANDERS
+overlay.addTo(map);
 
-    L.geoJSON(geojson).addTo(overlay);
-    //L.geoJSON(geojson).addTo(map); - dann wären die Fähnchen immer sichtbar und nicht ausschaltbar
+L.geoJSON(geojson).bindPopup(function (layer) {
+    return `
+        <h4>Fußgängerzone ${layer.feature.properties.ADRESSE}</h4>
+        <p>Zeitraum: ${layer.feature.properties.ZEITRAUM || ""}</p>
+        <p>${layer.feature.properties.AUSN_TEXT || ""}</p>
+        `;
+        // || sonst nichts reinschreiben - da sonst das Feld gezeigt wri und nicht schön aussieht
+}).addTo(overlay);
 }
 loadZones("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:FUSSGEHERZONEOGD&srsName=EPSG:4326&outputFormat=json");
 
