@@ -71,12 +71,12 @@ function addiere(zahl1, zahl2) {
 let ergebnis = addiere(2,2); //Funktion wird aufgerufen
 console.log(ergebnis);
 
-ERKLÄRUNG Defnineiren der Fukiton
+ERKLÄRUNG Defnineiren der Funkiton
 funktion sagt, dass funkiton erstellt wird
 addiere() = Name & Variablen
 ausdruck in {} - was soll geschehen?
 return gibt wert zurück
-let ergebnis = ... ausführen der funkiton
+let ergebnis = ... ausführen der Funktion
 */
 
 
@@ -268,7 +268,7 @@ async function loadHotels(url) { //anders
             // # sucht id
             // . sucht nach Klasse
             let searchList= document.querySelector("#searchList");
-            console.log(searchList)
+            //console.log(searchList)
             searchList.innerHTML += `<option value="${geoJsonPoint.properties.BETRIEB}"></option>`;
             //console.log(document.querySelector("#searchList").innerHTML)
             //console.log(`option value="${geoJsonPoint.properties.BETRIEB}"></option>`);
@@ -321,16 +321,13 @@ async function loadHotels(url) { //anders
                     })
                 }).bindPopup(popup);
             }
-            /*
-            return L.marker(latlng, {
-                icon: L.icon({
-                    iconUrl: iconStay,
-                    iconAnchor: [16, 37],
-                    popupAnchor: [0, -37]
-                })
-            }).bindPopup(popup);
-            */
         }
     }).addTo(overlay);
+
+    // Anzeigen des gesuchten Hotels und der Inhalte
+    let form = document.querySelector("#searchForm");
+    form.suchen.onclick = function() {
+        console.log(form.hotel.value);
+    }
 }
 loadHotels("https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:UNTERKUNFTOGD&srsName=EPSG:4326&outputFormat=json");
